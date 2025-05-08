@@ -52,8 +52,9 @@ int main(void)
 
     adc_init();
     adc_gpio_init(26);
-    adc_gpio_init(28);
-    adc_gpio_init(27);//Trimmer
+    adc_gpio_init(27);
+    adc_gpio_init(28);//Trimmer
+    adc_gpio_init(29);//Trimmer
     while (1)
     {
         hid_task();
@@ -94,24 +95,25 @@ void hid_task(void)
         return; // not enough time8+
     start_ms += interval_ms;
 
-    adc_select_input(0);
+    adc_select_input(0);///Eje Z
     uint32_t foo = 0;
     for(uint8_t i = 0; i < 100; i++) { foo += adc_read(); }
     report.z = ((uint16_t)(foo / 100)) >> 4;
 
-    adc_select_input(2);       
+    adc_select_input(1);///Rotacion Z
     foo = 0;
     for(uint8_t i = 0; i < 64; i++) { foo += adc_read(); }
     uint16_t adc_rz = ((uint16_t)(foo / 64)) >> 4;
 
-    adc_select_input(1);
+    adc_select_input(2);///Offset Rotacion Z              
     foo = 0;
     for (uint8_t i = 0; i < 64; i++) { foo += adc_read(); }
-    uint16_t valortrimZ = ((uint16_t)(foo / 64)) >> 4;
-    printf("La lectura del trimmer eje z es:%u\n",valortrimZ);
+    uint16_t valortrimRZ = ((uint16_t)(foo / 64)) >> 4;
 
-    int16_t rz_con_offset = (int16_t)adc_rz - (int16_t)valortrimZ;
+    int16_t rz_con_offset = (int16_t)adc_rz - (int16_t)valortrimRZ;
     if (rz_con_offset < 0) rz_con_offset = 0; // Si quieres evitar valores negativos
+    float factor_conversion = adc_rz / rz_con_offset;
+    uint16_t rz_conversion= factor_conversion * rz_con_offset ;
     report.rz = (uint16_t)rz_con_offset;
 
 
