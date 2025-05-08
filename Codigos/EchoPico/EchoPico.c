@@ -1,10 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 #include "pico/stdlib.h"
 
 int main() {
     stdio_init_all();
 
-    // Esperar hasta que USB esté listo
     while (!stdio_usb_connected()) {
         sleep_ms(100);
     }
@@ -15,7 +17,6 @@ int main() {
     while (true) {
         int pos = 0;
 
-        // Leer hasta nueva línea
         while (true) {
             int ch = getchar_timeout_us(0);
             if (ch == PICO_ERROR_TIMEOUT) {
@@ -26,7 +27,17 @@ int main() {
             if (ch == '\r' || ch == '\n') {
                 if (pos > 0) {
                     buffer[pos] = '\0';
-                    printf("PICO:%s\n", buffer);  // Eco a PowerShell
+
+                    char *ptr = strstr(buffer, "Pitch:");
+                    if (ptr != NULL) {
+                        char *num_start = ptr + 7;
+                        while (*num_start == ' ') num_start++;
+                        double rad = atof(num_start);
+                        double deg = rad * (180.0 / M_PI);
+                        printf("📐 Pitch convertido: %.2f grados (%.6f rad)\n", deg, rad);
+                    } else {
+                        printf("📝 Recibido sin Pitch: %s\n", buffer);
+                    }
                     break;
                 }
             } else if (pos < sizeof(buffer) - 1) {

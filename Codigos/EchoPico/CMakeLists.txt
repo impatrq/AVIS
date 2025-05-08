@@ -24,7 +24,7 @@ set(CMAKE_CXX_STANDARD 17)
 pico_sdk_init()
 
 add_executable(pico_usb_echo
-    EchoPico.c
+    EchoPico
 )
 
 target_link_libraries(pico_usb_echo
