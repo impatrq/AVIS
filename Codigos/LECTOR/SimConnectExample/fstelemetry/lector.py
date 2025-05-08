@@ -3,7 +3,7 @@ import time
 import serial
 
 ruta_archivo = 'datos.csv'
-puerto_usb = 'COM7'  # Cambia esto al puerto COM correcto
+puerto_usb = 'COM3'  # Cambia esto al puerto COM correcto
 baudrate = 115200    # Debe coincidir con el usado por la Pico
 
 try:
@@ -33,7 +33,7 @@ try:
                 try:
                     timestamp = float(fila[i_time])
                     pitch = float(fila[i_pitch])
-                    mensaje = f"⏱ {timestamp:.2f} | 🎯 Pitch°: {pitch:.6f} °"
+                    mensaje = f"⏱ {timestamp:.2f} | 🎯 Pitch: {pitch:.6f} "
                     print(mensaje)
                     
                     ser.write((mensaje + '\n').encode('utf-8'))  # Enviar a la Pico
