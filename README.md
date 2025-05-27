@@ -98,9 +98,9 @@ simulador.avis@gmail.com
 
 ### Juan Pablo Rodriguez
 
-- 📷 Instagram: [@](https://www.instagram.com/)
-- 📧 Mail: 
-- 🌐 Github: [](https://github.com/)
+- 📷 Instagram: [@juanka.rod](https://www.instagram.com/juanka.rod)
+- 📧 Mail: juamppa@icloud.com
+- 🌐 Github: [JuanPablo2905](https://github.com/JuanPablo2905)
 
 ### Vicente Seta
 
