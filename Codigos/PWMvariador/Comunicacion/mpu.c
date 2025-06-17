@@ -4,6 +4,10 @@
 #include "hardware/i2c.h"
 #include "mpu.h"
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 static int addr = 0x68;
 
 void mpu6050_init() {

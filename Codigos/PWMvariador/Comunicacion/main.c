@@ -7,7 +7,7 @@
 #define ENA 16
 #define PWM_WRAP 250
 #define MOTOR_ON 125
-#define MOTOR_OFF 0
+#define MOTOR_OFF 10
 #define TOLERANCIA 2.0
 
 void configurar_pwm(uint gpio) {
