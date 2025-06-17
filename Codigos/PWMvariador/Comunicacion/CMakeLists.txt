@@ -16,32 +16,32 @@ set(PICO_BOARD pico_w CACHE STRING "Board type")
 
 cmake_minimum_required(VERSION 3.13)
 
-# Importa el SDK de la Pico
 include(pico_sdk_import.cmake)
 
-# Nombre del proyecto
 project(MotorConNums C CXX ASM)
 
-# Estándares de C y C++
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
-# Inicializa el SDK de la Raspberry Pi Pico
 pico_sdk_init()
 
-# Agrega el archivo fuente (asegurate que el nombre coincida)
 add_executable(MotorConNums
-    MotorConNums.c
+    main.c       # El archivo principal que usás ahora
+    mpu.c        # El módulo que contiene la lógica del MPU6050
 )
 
-# Habilita stdio por USB (necesario para usar printf y leer por consola USB)
+# Habilita USB para printf y lectura por consola
 pico_enable_stdio_usb(MotorConNums 1)
 
-# Deshabilita UART (no lo necesitamos en este caso)
+# Desactiva UART (no se usa)
 pico_enable_stdio_uart(MotorConNums 0)
 
-# Vincula las librerías necesarias
-target_link_libraries(MotorConNums pico_stdlib)
+# Vincula todas las librerías necesarias
+target_link_libraries(MotorConNums 
+    pico_stdlib
+    hardware_pwm
+    hardware_i2c
+)
 
-# Genera archivos binarios (uf2, bin, elf, etc.)
+# Genera los archivos binarios finales
 pico_add_extra_outputs(MotorConNums)
