@@ -1,3 +1,19 @@
+# == DO NOT EDIT THE FOLLOWING LINES for the Raspberry Pi Pico VS Code Extension to work ==
+if(WIN32)
+    set(USERHOME $ENV{USERPROFILE})
+else()
+    set(USERHOME $ENV{HOME})
+endif()
+set(sdkVersion 2.1.1)
+set(toolchainVersion 14_2_Rel1)
+set(picotoolVersion 2.1.1)
+set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
+if (EXISTS ${picoVscode})
+    include(${picoVscode})
+endif()
+# ====================================================================================
+set(PICO_BOARD pico CACHE STRING "Board type")
+
 cmake_minimum_required(VERSION 3.13)
 include(pico_sdk_import.cmake)
 
@@ -12,13 +28,13 @@ add_executable(mpu_sender
     mpu6050.c
 )
 
+target_include_directories(mpu_sender PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+
 target_link_libraries(mpu_sender
     pico_stdlib
-    hardware_i2c
     pico_cyw43_arch_lwip_threadsafe_background
+    hardware_i2c
+    pico_lwip_udp
 )
-
-pico_enable_stdio_usb(mpu_sender 1)
-pico_enable_stdio_uart(mpu_sender 0)
 
 pico_add_extra_outputs(mpu_sender)

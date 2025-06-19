@@ -7,7 +7,8 @@
 #include "lwip/udp.h"
 #include "lwip/ip_addr.h"
 
-#define WIFI_SSID "TU_SSID"
+
+#define WIFI_SSID ""
 #define WIFI_PASS "TU_PASSWORD"
 #define PWM_GPIO 15
 #define PWM_WRAP 12500
@@ -79,5 +80,5 @@ int main() {
             set_pwm(PWM_GPIO, false);
 
         sleep_ms(100);
-    }a
+    }
 }
