@@ -23,7 +23,7 @@ if (EXISTS ${picoVscode})
     include(${picoVscode})
 endif()
 # ====================================================================================
-set(PICO_BOARD pico2_w CACHE STRING "Board type")
+set(PICO_BOARD pico2 CACHE STRING "Board type")
 
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
@@ -37,7 +37,8 @@ pico_sdk_init()
 
 add_executable(PruebaRTOS 
     PruebaRTOS.c
-    mpu.c)
+    mpu.c
+    )
 
 pico_set_program_name(PruebaRTOS "PruebaRTOS")
 pico_set_program_version(PruebaRTOS "0.1")
