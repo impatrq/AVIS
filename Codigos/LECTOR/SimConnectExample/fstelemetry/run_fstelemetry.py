@@ -1,6 +1,6 @@
 from fstelemetry.telemetry import Telemetry
 
-# Solo registramos el pitch
+# Se registra el pitch y el roll 
 keys = ["PLANE_BANK_DEGREES","PLANE_PITCH_DEGREES"]
 
 # Crear el objeto Telemetry con esa única clave
