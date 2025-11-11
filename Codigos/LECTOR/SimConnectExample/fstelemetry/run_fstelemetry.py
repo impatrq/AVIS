@@ -7,4 +7,4 @@ keys = ["PLANE_BANK_DEGREES","PLANE_PITCH_DEGREES"]
 t = Telemetry(keys)
 
 # Ejecutar la escucha con intervalo de segundos
-t.listen(path="datos.csv", interval=0.3)
+t.listen(path="datos.csv", interval=0.5)
