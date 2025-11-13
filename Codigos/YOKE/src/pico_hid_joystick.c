@@ -31,6 +31,82 @@
 #include "tusb.h"
 #include "pico/stdlib.h"
 #include "hardware/adc.h"
+#include <math.h>
+
+
+uint16_t promedioADC0(void){
+    uint32_t acumulador=0;
+    adc_select_input(0);
+    for(int i=0 ; i<64 ; i++){
+    uint16_t lectura = adc_read();
+    acumulador += lectura;
+    }
+    uint16_t promedio=acumulador/64;
+    return promedio;
+}
+
+uint16_t promedioADC1(void){
+    uint32_t acumulador=0;
+    adc_select_input(1);
+    for(int i=0 ; i<64 ; i++){
+    uint16_t lectura = adc_read();
+    acumulador += lectura;
+    }
+ 
+    uint16_t promedio=acumulador/64;
+    return promedio;
+}
+
+/// Esto es para convertir los valores del pote logrartimico a lineal 
+static inline uint16_t map_logpot_to_linear(uint16_t raw)
+{
+    const float x0 = 2100.0f;   // crudo -> 0
+    const float x1 = 3045.0f;   // crudo -> 2047
+    const float x2 = 3360.0f;   // crudo -> 4095
+
+    // gamma que asegura que 3045 -> 2047
+    const float gamma = logf(0.5f) / logf((x1 - x0) / (x2 - x0)); // ≈ 2.4094
+
+    // normalizar a [0,1]
+    float t = ((float)raw - x0) / (x2 - x0);
+    if (t < 0.0f) t = 0.0f;
+    if (t > 1.0f) t = 1.0f;
+
+    // des-logaritmización y escalado a 0..4095
+    float y = 4095.0f * powf(t, gamma);
+
+    // clamp final
+    if (y < 0.0f)   y = 0.0f;
+    if (y > 4095.0f) y = 4095.0f;
+
+    return (uint16_t)floorf(y);
+}
+
+
+static inline uint16_t map_logpot_to_linear2(uint16_t raw)
+{
+    const float x0 = 17.0f;   // crudo -> 0
+    const float x1 = 2650.0f;   // crudo -> 2047
+    const float x2 = 3200.0f;   // crudo -> 4095
+
+    // gamma que asegura que 3045 -> 2047
+    const float gamma = logf(0.5f) / logf((x1 - x0) / (x2 - x0)); // ≈ 2.4094
+
+    // normalizar a [0,1]
+    float t = ((float)raw - x0) / (x2 - x0);
+    if (t < 0.0f) t = 0.0f;
+    if (t > 1.0f) t = 1.0f;
+
+    // des-logaritmización y escalado a 0..4095
+    float y = 4095.0f * powf(t, gamma);
+
+    // clamp final
+    if (y < 0.0f)   y = 0.0f;
+    if (y > 4095.0f) y = 4095.0f;
+
+    return (uint16_t)floorf(y);
+}
+
  
 void hid_task(void);
  
@@ -94,15 +170,17 @@ void hid_task(void)
     if (board_millis() - start_ms < interval_ms)
         return; // not enough time8+
     start_ms += interval_ms;
-
-    adc_select_input(0);///Eje Z
-    uint32_t foo = 0;
-    for(uint8_t i = 0; i < 100; i++) { foo += adc_read(); }
+    uint32_t foo=0;
+    uint16_t PromEjeZ=promedioADC0();
+    uint16_t Eje_z = map_logpot_to_linear2(PromEjeZ);
+    for(uint8_t i = 0; i < 100; i++) { foo += Eje_z; }
     report.z = ((uint16_t)(foo / 100)) >> 4;
 
-    adc_select_input(1);///Rotacion Z
+    adc_select_input(1);///rotacion Z
     foo = 0;
-    for(uint8_t i = 0; i < 64; i++) { foo += adc_read(); }
+    uint16_t PromRotacionZ=promedioADC1();
+    uint16_t Rotacion_z = map_logpot_to_linear(PromRotacionZ);
+    for(uint8_t i = 0; i < 64; i++) { foo += Rotacion_z; }
     uint16_t adc_rz = ((uint16_t)(foo / 64)) >> 4;
 
     adc_select_input(2);///Offset Rotacion Z              
@@ -182,7 +260,7 @@ void tud_hid_set_report_cb(uint8_t instance, uint8_t report_id, hid_report_type_
 {
     // if (report_id == 2 && report_type == HID_REPORT_TYPE_OUTPUT && buffer[0] == 2 && bufsize >= sizeof(light_data)) //light data
     // {
-    //     size_t i = 0;
+    //     size_t i =2 0;
     //     for (i; i < sizeof(light_data); i++)
     //     {
     //         light_data.raw[i] = buffer[i + 1];
