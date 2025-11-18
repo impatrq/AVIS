@@ -41,7 +41,7 @@ AVIS es un simulador de vuelo educativo diseñado para proporcionar una experien
 
 - **Profesores de la Escuela**: Avis permite enseñarle a los estudiantes sobre instrumentación, sistemas de navegación, y demás características de la aeronave.
 - **Pilotos en Formación**: Ayuda de forma segura y controlada a las personas que buscan aprender a pilotar.
-- **Horas de Vuelo**: Con el simulador certificado permitiria a los pilotos sumar horas de vuelo usando nuestro.
+- **Horas de Vuelo**: Con el simulador certificado permitiria a los pilotos sumar horas de vuelo usando nuestro producto.
 
 ## ⚡ Tecnología Utilizada
 
