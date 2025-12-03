@@ -3,9 +3,9 @@ import time
 import serial
 import serial.tools.list_ports
 
-ruta_archivo = 'datos.csv'
-puerto_usb = 'COM15'
-baudrate = 115200
+ruta_archivo = 'datos.csv'# Este es el nombre del archivo que la pico va a leer. 
+puerto_usb = 'COM3'# Cambiar dependiendo del puerto en donde este conectada la pico 
+baudrate = 115200# Baudrate de la pico.
 
 
 def conectar_pico():
@@ -38,11 +38,13 @@ def conectar_pico():
 
 def leer_datos_y_enviar(ser):
     """Lee el archivo CSV y envía los datos de Bank y Pitch a la Pico."""
-    print("✅ Lectura iniciada desde la última línea del CSV ")
+    print("✅ Lectura iniciada desde la última línea del CSV")
 
     # Abrir archivo y buscar encabezado
     with open(ruta_archivo, mode='r') as archivo:
         encabezado = archivo.readline().strip().split(',')
+        #Estos son los datos del cabeceo y del alabeo, y una etiqueta de tiempo. 
+        # Aunque lo diga asi, no esta en grados, esta en radianes.
         columnas_necesarias = ['time', 'PLANE_BANK_DEGREES', 'PLANE_PITCH_DEGREES']
 
         for col in columnas_necesarias:
