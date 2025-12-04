@@ -1,0 +1,32 @@
+parámetros  bàsicos		
+
+parámetro /	valor /	descripción
+P013	1	
+P002	1	 modo local
+P003	frecuencia de referencia	
+		
+modo remoto	valor	
+P002	0	modo remoto
+P200	1	ambos sentidos
+P102	potencia de motor	datos de motor
+P103	tension de motor	
+P104	frecuencia de motor	
+P105	corriente de motor	
+P106	velocidad de motor	
+P107	ama *	
+P205	50,000hz	velocidad max en 50Hz
+P206	2	rampa senoidal
+P207	3	rampa de aceleracion
+P208	3	rampa de desaceleracion
+P215	**	referencia en modo remoto
+		
+P302	7	arranque en sentipo horario
+P303	10	arranque en sentipo anti
+		
+		
+		
+nota		
+*  al poner el parmetro 107 en 2 el equipo entra en modo de autotuning calculando la impediancia de motor al oprimir la marcha local, comienza a zumbar sin mover el eje de motor y despues de unos segundos termina		
+		
+		
+**  el valor que se carga en el parámetro 215 es porcentual de 0 a 100% respecto al rango determinado por los parámetros 204-205, si el 205 esta en 50hz y el 204 en 0  y el 215 esta en 10%, la velocidad resultante es 5hz
