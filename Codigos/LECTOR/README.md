@@ -1,2 +1,0 @@
-# AVIS
- Simulador de vuelo
