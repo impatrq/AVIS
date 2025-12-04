@@ -16,7 +16,7 @@ static double P_pitch[2][2] = {{0,0},{0,0}};
 static double angle_roll = 0.0, bias_roll = 0.0;
 static double P_roll[2][2] = {{0,0},{0,0}};
 
-// Constantes 
+// Constantes de ajuste
 const double Q_angle = 0.001;
 const double Q_bias = 0.003;
 const double R_measure = 0.03;
@@ -73,11 +73,12 @@ void leer_gyro(double *gyro_pitch, double *gyro_roll) {
     *gyro_pitch = gyro_raw[1] / 131.0; // eje Y → pitch
 }
 
-
+// ====== Filtro de Kalman  ======
 double kalman_update(double newAngle, double newRate, double dt,
                      double *angle, double *bias, double P[2][2]) {
 
     double rate = newRate - *bias;
+    
     *angle += dt * rate;
 
     P[0][0] += dt * (dt*P[1][1] - P[0][1] - P[1][0] + Q_angle);
