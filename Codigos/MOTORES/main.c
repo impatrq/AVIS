@@ -8,7 +8,7 @@
 #include "task.h"
 #include "queue.h"
 
- 
+//Cada pin corresponde a una entrada de los variadores de velocidad como por ejemplo avance, retroceso y stop.
 #define TOLERANCIA 7
 #define REV_GPIO 19
 #define FWD_GPIO 20
