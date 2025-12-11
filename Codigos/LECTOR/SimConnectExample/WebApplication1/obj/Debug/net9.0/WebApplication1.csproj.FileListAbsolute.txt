@@ -1,0 +1,5 @@
+c:\Sim Connect Example\WebApplication1\obj\Debug\net9.0\WebApplication1.GeneratedMSBuildEditorConfig.editorconfig
+c:\Sim Connect Example\WebApplication1\obj\Debug\net9.0\WebApplication1.AssemblyInfoInputs.cache
+c:\Sim Connect Example\WebApplication1\obj\Debug\net9.0\WebApplication1.AssemblyInfo.cs
+c:\Sim Connect Example\WebApplication1\obj\Debug\net9.0\WebApplication1.csproj.CoreCompileInputs.cache
+c:\Sim Connect Example\WebApplication1\obj\Debug\net9.0\WebApplication1.MvcApplicationPartsAssemblyInfo.cache
